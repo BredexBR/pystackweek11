@@ -22,7 +22,7 @@ O evento Pystack Week 11 da Pythonando apresenta um evento sobre otimização e 
 - **Registro de Investimentos**: As empresas podem registrar seus investimentos uns nos outros, estabelecendo uma relação financeira entre elas.
 - **Relacionamento de Investimentos**: O sistema gerencia e visualiza como os investimentos são feitos e monitorados entre as empresas.
 
-![Diálogo com NPC](imgs/investir.png)
+![Investimentos](imgs/investir.png)
 
 ### Objetivo do Sistema
 
