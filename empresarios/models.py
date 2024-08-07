@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
+from datetime import date
 
 class Empresas(models.Model): # Entende que vai ser uma classe para ser criada dentro do banco de dados
     tempo_existencia_choices = (
@@ -38,3 +40,34 @@ class Empresas(models.Model): # Entende que vai ser uma classe para ser criada d
 
     def __str__(self):
         return f'{self.user.username} | {self.nome}'
+    
+    @property
+    def status(self):
+        if date.today() > self.data_final_captacao:
+            return mark_safe('<span class="badge bg-success">Captação finalizada</span>') # Django não aceita scripts no
+                                                # html por conta de segurança, entao é necessário usar a função "mark_safe()"
+        return mark_safe('<span class="badge bg-primary">Em captação</span>')
+    
+    @property
+    def corrigir_url_logo(self): # Por algum motivo estava vindo /empresarios///
+        return f'/empresarios{self.logo.url}'
+    
+    @property
+    def valuation(self):
+        return f'{(100 * self.valor) / self.percentual_equity:.2f}'
+
+class Documento(models.Model):
+    empresa = models.ForeignKey(Empresas, on_delete=models.DO_NOTHING)
+    titulo = models.CharField(max_length=30)
+    arquivo = models.FileField(upload_to="documentos")
+
+    def __str__(self):
+        return self.titulo
+    
+class Metricas(models.Model):
+    empresa = models.ForeignKey(Empresas, on_delete=models.DO_NOTHING)
+    titulo = models.CharField(max_length=30)
+    valor = models.FloatField()
+
+    def __str__(self):
+        return self.titulo

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Sempre que adicionar um novo app, adicionar abaixo:
     'usuarios', # exemplo: python manage.py startapp usuarios
     'empresarios',
+    'investidores',
 ]
 
 MIDDLEWARE = [
