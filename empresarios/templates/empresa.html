@@ -41,7 +41,7 @@
                         <a href="#" class="sub-fonte">Ver investidores</a>
                     </div>
                     <div class="col-md">
-                        <h2 class="titulo2">0 Captados</h2>
+                        <h2 class="titulo2">{{total_captado}} Captados</h2>
                     </div>
                 </div>
                 <hr>
@@ -50,9 +50,9 @@
                         <h5>Percentual de equity vendido</h5>
                         <div class="progress">
                             <div class="progress-bar bg-primary"
-                                 style="width: %"></div>
+                                 style="width: {{percentual_vendido}}%"></div>
                             <div class="progress-bar bg-success"
-                                 style="width: %"></div>
+                                 style="width: {{empresa.percentual_equity}}%"></div>
                         </div>
                         <br>
                         <label class="point-white"></label><span>&nbsp&nbsp Percentual total da empresa</span>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-md">
                         <h5>Valuation</h5>
-                        <span class="sub-fonte">Atual: 000</span>
+                        <span class="sub-fonte">Atual: {{valuation_atual}}</span>
                         <br>
                         <span class="sub-fonte">Esperado: {{empresa.valuation}}</span>
                     </div>
@@ -135,38 +135,38 @@
                 <hr>
                 <br>
                 
+                {% for pi in proposta_investimentos_enviada  %}
                     <div class="bg-color-dark card-investimento">
                         <div class="row">
                             <div class="col-md">
                                 <img src="{% static 'geral/img/foto_perfil.webp' %}" class="foto-perfil" alt="">
                             </div>
                             <div class="col-md-5" style="text-align: left">
-                                <span class="sub-fonte">Caio</span>
+                                <span class="sub-fonte">{{pi.investidor}}</span>
                                 <br>
-                                <span class="sub-fonte2">R$ 9000</span>
+                                <span class="sub-fonte2">R$ {{pi.valor}}</span>
                                 <br>
-                                <span class="sub-fonte2">1% 
-
-                                   
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" style="color: #00ff00;" viewBox="0 0 16 16">
-                                        <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                                    </svg>
-                                    
-                                    <!---    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="color: #ff0000;" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                <span class="sub-fonte2">{{pi.percentual}}% 
+                                    {% if pi.valuation >= empresa.valuation  %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" style="color: #00ff00;" viewBox="0 0 16 16">
+                                            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                                        </svg>
+                                    {% else %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="color: #ff0000;" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                         </svg>
-                                    -->
-                                    
+                                    {% endif %}
                                 </span>
                             </div>
                             <div class="col-md">
-                                <a href="#" class="btn btn-indigo-normal">Aceitar</a>
+                                <a href="{% url 'gerenciar_proposta' pi.id %}?acao=aceitar" class="btn btn-indigo-normal">Aceitar</a>
                                 <br>
-                                <a href="#" style="margin-top: 5px;" class="btn btn-danger">Negar</a>
+                                <a href="{% url 'gerenciar_proposta' pi.id %}?acao=recusar" style="margin-top: 5px;" class="btn btn-danger">Negar</a>
                             </div>
                         </div>
                     </div>
                     <br>
+                {% endfor %}            
                 
             </div>
         </div>

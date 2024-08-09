@@ -49,12 +49,8 @@ class Empresas(models.Model): # Entende que vai ser uma classe para ser criada d
         return mark_safe('<span class="badge bg-primary">Em captação</span>')
     
     @property
-    def corrigir_url_logo(self): # Por algum motivo estava vindo /empresarios///
-        return f'/empresarios{self.logo.url}'
-    
-    @property
     def valuation(self):
-        return f'{(100 * self.valor) / self.percentual_equity:.2f}'
+        return float (f'{(100 * self.valor) / self.percentual_equity:.2f}')
 
 class Documento(models.Model):
     empresa = models.ForeignKey(Empresas, on_delete=models.DO_NOTHING)
